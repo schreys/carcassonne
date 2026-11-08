@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#24321f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Carcassonne</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Creepster&family=Mountains+of+Christmas:wght@700&family=Press+Start+2P&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="board"></canvas>
+
+    <section id="home" class="screen panel">
+      <h1 class="title">Carcassonne</h1>
+      <p class="subtitle" id="subtitle"></p>
+      <div class="theme-picker" id="themePicker"></div>
+      <label
+        >Jouw naam
+        <input
+          id="nameInput"
+          maxlength="20"
+          autocomplete="nickname"
+          placeholder="bv. Stefan"
+        />
+      </label>
+      <button id="createBtn" class="primary">Nieuw spel maken</button>
+      <div class="divider"><span>of doe mee met een code</span></div>
+      <div class="row">
+        <input
+          id="codeInput"
+          maxlength="4"
+          placeholder="CODE"
+          autocomplete="off"
+        />
+        <button id="joinBtn">Meedoen</button>
+      </div>
+    </section>
+
+    <section id="lobby" class="screen panel hidden">
+      <div class="room-card">
+        <span class="section-title">Kamercode</span>
+        <span id="roomCode" class="code room-code"></span>
+        <div class="row center">
+          <button id="copyLink" class="small-btn">🔗 Kopieer link</button>
+          <button id="shareLink" class="small-btn hidden">📤 Delen</button>
+        </div>
+      </div>
+      <div class="section">
+        <h3 class="section-title">Spelers <span id="playerCount"></span></h3>
+        <ul id="lobbyPlayers" class="players"></ul>
+      </div>
+      <div id="hostControls" class="section">
+        <h3 class="section-title">Bot toevoegen</h3>
+        <div class="row">
+          <select id="botLevel">
+            <option value="easy">Makkelijke bot</option>
+            <option value="normal" selected>Normale bot</option>
+          </select>
+          <button id="addBot">+ Bot</button>
+        </div>
+        <h3 class="section-title spaced">Instellingen</h3>
+        <div class="row wrap">
+          <label
+            >Thema
+            <select id="themeSelect"></select
+          ></label>
+          <label
+            >Botsnelheid
+            <select id="botSpeed">
+              <option value="fast">Snel</option>
+              <option value="normal">Normaal</option>
+              <option value="slow">Traag</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <button id="startBtn" class="primary big">Start spel</button>
+      <p id="waitHost" class="hint">
+        Wachten tot de host het spel start… (thema:
+        <span id="themeName"></span>)
+      </p>
+      <button id="leaveBtn" class="link">Kamer verlaten</button>
+    </section>
+
+    <section id="game" class="hidden">
+      <div id="banner"></div>
+      <aside id="sidebar" class="panel">
+        <button id="sheetToggle" class="sheet-handle" aria-label="Meer tonen">
+          <span></span>
+        </button>
+        <div class="tile-box">
+          <canvas id="tilePreview" width="110" height="110"></canvas>
+          <div class="tile-actions">
+            <button id="rotateBtn">
+              ↻ Draai<span class="desktop-only"> (R)</span>
+            </button>
+            <button id="confirmPlace" class="primary hidden">✓ Leggen</button>
+            <div id="deckCount" class="hint"></div>
+          </div>
+        </div>
+        <div id="meepleBox" class="hidden">
+          <p id="meepleHint"></p>
+          <div class="row">
+            <button id="undoTile">↶ Terug</button>
+            <button id="skipMeeple" class="primary"></button>
+          </div>
+        </div>
+        <ul id="scoreList" class="players"></ul>
+        <div class="sheet-extra">
+          <label class="small"
+            >Thema (alleen voor jou)
+            <select id="localTheme"></select
+          ></label>
+          <ol id="log"></ol>
+          <button id="leaveGame" class="link">Spel verlaten</button>
+        </div>
+      </aside>
+      <div id="pendingActions" class="hidden">
+        <button id="pendRotate" title="Draaien">↻</button>
+        <button id="pendConfirm" class="primary" title="Leggen">✓</button>
+      </div>
+      <div id="zoomControls">
+        <button id="zoomIn" title="Inzoomen">+</button>
+        <button id="zoomOut" title="Uitzoomen">−</button>
+        <button id="centerBtn" title="Centreren">⌖</button>
+      </div>
+      <p id="helpText" class="hint">
+        Klik op een vak · klik nog eens (of R) om te draaien · ✓ of Enter om te
+        leggen · sleep/scroll om te verschuiven/zoomen
+      </p>
+    </section>
+
+    <section id="endOverlay" class="screen panel hidden">
+      <h2>Eindstand</h2>
+      <ol id="ranking"></ol>
+      <button id="toLobbyBtn" class="primary">Terug naar lobby</button>
+      <p id="waitLobby" class="hint">Wachten op de host…</p>
+      <button id="viewBoard" class="link">Bord bekijken</button>
+    </section>
+
+    <div id="toast"></div>
+    <script type="module" src="client.js"></script>
+  </body>
+</html>
